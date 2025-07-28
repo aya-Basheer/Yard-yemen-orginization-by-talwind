@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+     <link href="./output.css" rel="stylesheet">
+
+</head>
+
+    <body class="flex min-h-screen bg-gray-100">
+  <!-- Sidebar -->
+  <aside class="w-64 bg-green-900 p-5 shadow-md hidden md:block">
+    <h2 class="text-xl font-bold text-gray-200 mb-6">لوحة التحكم</h2>
+    <nav class="flex flex-col gap-4">
+      <a href="#" class="text-gray-200   text-2xl hover:text-green-600 ">الرئيسية</a>
+      <a href="#" class="text-gray-200   text-2xl hover:text-green-600">المشاريع</a>
+      <a href="#" class="text-gray-200   text-2xl  hover:text-green-600">المستخدمون</a>
+      <a href="#" class="text-gray-200   text-2xl hover:text-green-600">الإعدادات</a>
+    </nav>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="flex-1 p-6">
+    <h1 class="text-2xl font-bold mb-4">مرحبًا بك في لوحة التحكم</h1>
+    <!-- هنا تضيف العناصر حسب ما تراه مناسباً -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="bg-white p-4 shadow rounded-xl">عدد المتبرعين: 150</div>
+      <div class="bg-white p-4 shadow rounded-xl">المشاريع النشطة: 8</div>
+      <div class="bg-white p-4 shadow rounded-xl">الرسائل الجديدة: 12</div>
+    </div>
+    <div class="mt-6">
+  <button  id="openModalBtn"  class="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-xl shadow">
+    + إضافة مشروع جديد
+  </button>
+
+
+  <div class="overflow-auto mt-6">
+  <table class="min-w-full bg-white rounded-xl shadow text-right">
+    <thead class="bg-gray-100 text-gray-700">
+      <tr>
+        <th class="py-3 px-4">اسم المشروع</th>
+        <th class="py-3 px-4">الحالة</th>
+        <th class="py-3 px-4">المبلغ</th>
+        <th class="py-3 px-4">الإجراءات</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="border-b hover:bg-gray-50">
+        <td class="py-2 px-4">مشروع بناء مدرسة</td>
+        <td class="py-2 px-4 text-green-600">نشط</td>
+        <td class="py-2 px-4">$2,000</td>
+        <td class="py-2 px-4">
+          <button class="text-blue-600 hover:underline">تعديل</button>
+          <button class="text-red-600 hover:underline ml-2">حذف</button>
+        </td>
+      </tr>
+      <!-- أضف المزيد من الصفوف هنا إن أردت -->
+    </tbody>
+  </table>
+</div>
+
+</div>
+
+  </main>
+
+<button id="toggleSidebar" class="md:hidden fixed top-4 left-4 z-50">
+  <i class="fas fa-bars text-2xl"></i>
+ click</button>
+
+
+
+ <!-- نافذة منبثقة لإضافة مشروع -->
+<div id="projectModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+  <div class="bg-white w-[90%] max-w-lg p-6 rounded-xl shadow-lg relative">
+    
+    <!-- زر الإغلاق -->
+    <button id="closeModalBtn" class="absolute top-3 right-3 text-gray-500 hover:text-red-500 text-2xl">
+      &times;
+    </button>
+
+    <!-- محتوى الفورم -->
+    <h2 class="text-xl font-bold mb-4 text-gray-800">إضافة مشروع جديد</h2>
+    <form id="addProjectForm" class="space-y-4">
+      <div>
+        <label class="block text-gray-600 mb-1">اسم المشروع</label>
+        <input type="text" class="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-green-500" required>
+      </div>
+      <div>
+        <label class="block text-gray-600 mb-1">الوصف</label>
+        <textarea class="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-green-500" rows="3" required></textarea>
+      </div>
+      <div>
+        <label class="block text-gray-600 mb-1">المبلغ المطلوب ($)</label>
+        <input type="number" class="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-green-500" required>
+      </div>
+      <div class="text-right">
+        <button type="submit" class="bg-green-600 hover:bg-green-700 text-white px-5 py-2 rounded">حفظ</button>
+      </div>
+    </form>
+
+  </div>
+</div>
+
+<script>
+
+  document.getElementById('toggleSidebar').addEventListener('click', () => {
+  document.querySelector('aside').classList.toggle('hidden');
+});
+
+
+
+  const openModalBtn = document.getElementById('openModalBtn');
+  const closeModalBtn = document.getElementById('closeModalBtn');
+  const projectModal = document.getElementById('projectModal');
+
+  // فتح النافذة
+  openModalBtn.addEventListener('click', () => {
+    projectModal.classList.remove('hidden');
+  });
+
+  // غلق النافذة
+  closeModalBtn.addEventListener('click', () => {
+    projectModal.classList.add('hidden');
+  });
+
+  // إغلاق عند الضغط خارج المودال
+  window.addEventListener('click', (e) => {
+    if (e.target === projectModal) {
+      projectModal.classList.add('hidden');
+    }
+  });
+
+  // معالجة الفورم (إن أحببت إضافة منطق لاحقًا)
+  document.getElementById('addProjectForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    alert('تم إرسال المشروع (يمكنك الآن حفظ البيانات فعليًا باستخدام JavaScript)');
+    projectModal.classList.add('hidden');
+    this.reset();
+  });
+
+
+</script>
+</body>
+</html>
